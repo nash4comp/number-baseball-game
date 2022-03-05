@@ -90,10 +90,24 @@
       if (tries.lentgh >= 9) {
         const message = document.createTextNode(`Defeat! The answer is ${answer.join('')}`); // 여기서는 ''을 감싸기 위해 `를 사용했다.
         $logs.appendChild(message); // log안에 text를 추가한다.
-        // 줄바꿈하기 위해서는 $logs.append(document.createElement('br'));
+        // 줄바꿈하기 위해서는 $logs.append(document.createElement('br/'));
         return;
       }
       // 몇 스트라이크 몇 볼인지 검사
+      let strike = 0;
+      let ball = 0;
+      for (let i = 0; i < answer.length; i++) {
+        const index = value.indexOf(answer[i]);
+        if (index > -1) {   // 일치하는 숫자 발견
+          if (index === i) {  // 자릿수도 같음
+            strike += 1;
+          } else {  // 숫자만 같음
+            ball += 1;
+          }
+        }
+      }
+      // 문자열은 create 안하고 append로 추가하면 된다. 아래 처럼 한번에 태그도 추가된다.
+      $logs.append(`${value}: ${strike} Strike ${ball}, Ball`, document.createElement('br'));
       tries.push(value);
     });
 
