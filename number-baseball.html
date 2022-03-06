@@ -11,7 +11,7 @@
 <body>
   <h1>Number Baseball for Moana</h1>
   <img src="https://drive.google.com/uc?export=download&id=1zSCLC1fa9g6OVl-bcol980Tf49Fd2Cu6" width=350>
-  <br/><br/>
+  <br /><br />
   <form id="form">
     <input type="text" id="input">
     <button>Confirm</button>
@@ -63,6 +63,11 @@
       return true;
     }
 
+    function defeated() {
+      const message = document.createTextNode(`Defeat! The answer is ${answer.join('')}`); // 여기서는 ''을 감싸기 위해 `를 사용했다.
+      $logs.appendChild(message); // log안에 text를 추가한다.
+    }
+
     let out = 0;
     // form안에 들어있는 버튼을 누르면 submit 이벤트가 호출이 된다.
     // form의 기본 동작은 새로고침이 된다. 아예 안생기게 할 수는 없고, 막을수는 있다.
@@ -91,8 +96,7 @@
         return;
       }
       if (tries.lentgh >= 9) {
-        const message = document.createTextNode(`Defeat! The answer is ${answer.join('')}`); // 여기서는 ''을 감싸기 위해 `를 사용했다.
-        $logs.appendChild(message); // log안에 text를 추가한다.
+        defeated();
         // 줄바꿈하기 위해서는 $logs.append(document.createElement('br/'));
         return;
       }
@@ -117,8 +121,7 @@
         $logs.append(`${value}:${strike} Strike, ${ball} Ball`, document.createElement('br'));
       }
       if (out === 3) {
-        const message = document.createTextNode(`Defeat! The answer is ${answer.join('')}`);
-        $logs.appendChild(message);
+        defeated();
         return;
       }
 
@@ -126,6 +129,9 @@
       // $logs.append(`${value}: ${strike} Strike, ${ball} Ball`, document.createElement('br'));
       tries.push(value);
     });
+
+    // 나중에 removeEventListener를 써서 승리나 패배를 하고나서 메시지가 더 안나오게
+    // 아웃일때 몇 아웃인지, 스트라이크와 색상을 따로 주는 것도 업데이트 해볼 것
 
   </script>
 </body>
