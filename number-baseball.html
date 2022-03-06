@@ -9,6 +9,9 @@
 </head>
 
 <body>
+  <h1>Number Baseball for Moana</h1>
+  <img src="https://drive.google.com/uc?export=download&id=1zSCLC1fa9g6OVl-bcol980Tf49Fd2Cu6" width=350>
+  <br/><br/>
   <form id="form">
     <input type="text" id="input">
     <button>Confirm</button>
@@ -51,7 +54,7 @@
         return alert('Please input 4 digits number.');
       }
       // new Set은 중복이 제거된 배열
-      if (new Set(input).size !==4) {   // 중복된 숫자가 있는가?
+      if (new Set(input).size !== 4) {   // 중복된 숫자가 있는가?
         return alert('Please avoid redendancy.');
       }
       if (tries.includes(input)) {    // 이미 시도한 값은 아닌가?
@@ -60,7 +63,7 @@
       return true;
     }
 
-
+    let out = 0;
     // form안에 들어있는 버튼을 누르면 submit 이벤트가 호출이 된다.
     // form의 기본 동작은 새로고침이 된다. 아예 안생기게 할 수는 없고, 막을수는 있다.
     $form.addEventListener('submit', (event) => {
@@ -74,7 +77,7 @@
       const value = $input.value;
       $input.value = '';
 
-      if(!checkInput(value)) {
+      if (!checkInput(value)) {
         return;
       }
       // 에러 없는 경우, 입력값 문제 없음
@@ -106,8 +109,21 @@
           }
         }
       }
+
+      if (strike === 0 && ball === 0) {
+        out++;
+        $logs.append(`${value}:Out`, document.createElement('br'));
+      } else {
+        $logs.append(`${value}:${strike} Strike, ${ball} Ball`, document.createElement('br'));
+      }
+      if (out === 3) {
+        const message = document.createTextNode(`Defeat! The answer is ${answer.join('')}`);
+        $logs.appendChild(message);
+        return;
+      }
+
       // 문자열은 create 안하고 append로 추가하면 된다. 아래 처럼 한번에 태그도 추가된다.
-      $logs.append(`${value}: ${strike} Strike ${ball}, Ball`, document.createElement('br'));
+      // $logs.append(`${value}: ${strike} Strike, ${ball} Ball`, document.createElement('br'));
       tries.push(value);
     });
 
